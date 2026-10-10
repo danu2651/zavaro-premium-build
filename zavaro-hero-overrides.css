@@ -1,0 +1,988 @@
+/*
+ * ZAVARO — Homepage hero and shared header
+ * Load after style.css and hero.css.
+ *
+ * Responsibilities:
+ * 1. Shared header layout across all pages.
+ * 2. Homepage-only transparent header and full-screen slideshow.
+ * 3. Homepage campaign note and slide pagination.
+ *
+ * Keep homepage-specific rules scoped to #zavaroHero so they do not
+ * unintentionally affect inner pages.
+ */
+
+/* =========================================================
+   SHARED HEADER — ALL PAGES
+========================================================= */
+
+.site-header {
+  position: relative;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  min-height: 82px;
+  padding: 0 clamp(20px, 4vw, 64px);
+  color: #201e1a;
+  background: #f5f3ee;
+  border: 0;
+  box-shadow: none;
+}
+
+.site-header > .brand {
+  grid-column: 1;
+  justify-self: start;
+  margin: 0;
+  color: #201e1a;
+  white-space: nowrap;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 23px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-decoration: none;
+}
+
+.site-header > .main-nav {
+  grid-column: 2;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 2.2vw, 34px);
+  white-space: nowrap;
+}
+
+.site-header .main-nav a,
+.site-header .main-nav .nav-trigger {
+  color: inherit;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.site-header > .header-actions {
+  grid-column: 3;
+  justify-self: end;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(10px, 1.3vw, 18px);
+  width: auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.site-header .header-actions .icon-button {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 25px;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 34px;
+  padding: 0;
+  color: inherit;
+}
+
+.site-header .header-actions .icon-button svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.site-header .header-actions .count {
+  color: inherit;
+  border-color: currentColor;
+  background: transparent;
+}
+
+.site-header .main-nav a:hover,
+.site-header .main-nav .nav-trigger:hover,
+.site-header .header-actions .icon-button:hover {
+  opacity: 0.65;
+}
+
+.site-header .header-actions .menu-button {
+  display: none;
+}
+
+/* =========================================================
+   HOMEPAGE — TRANSPARENT HEADER
+========================================================= */
+
+body:has(#zavaroHero) .announcement {
+  display: none !important;
+}
+
+body:has(#zavaroHero) .site-header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 50;
+  height: 82px;
+  min-height: 82px;
+  color: #fff;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body:has(#zavaroHero) .site-header > .brand,
+body:has(#zavaroHero) .site-header .main-nav a,
+body:has(#zavaroHero) .site-header .main-nav .nav-trigger,
+body:has(#zavaroHero) .site-header .header-actions .icon-button {
+  color: #fff !important;
+}
+
+body:has(#zavaroHero) .site-header .header-actions .count {
+  color: #fff;
+  border-color: currentColor;
+  background: transparent;
+}
+
+/* =========================================================
+   HOMEPAGE — FULL-VIEWPORT SLIDESHOW
+========================================================= */
+
+body:has(#zavaroHero) #zavaroHero.hero {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 540px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #24221f;
+}
+
+body:has(#zavaroHero) #zavaroHero .hero-slides,
+body:has(#zavaroHero) #zavaroHero .hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body:has(#zavaroHero) #zavaroHero .hero-slide {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+body:has(#zavaroHero) #zavaroHero .hero-slide.active {
+  z-index: 1;
+  visibility: visible;
+  opacity: 1;
+}
+
+body:has(#zavaroHero) #zavaroHero .hero-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.86);
+  transform: scale(1.01);
+  transition: transform 7s ease;
+}
+
+body:has(#zavaroHero) #zavaroHero .hero-slide.active img {
+  transform: scale(1.035);
+}
+
+body:has(#zavaroHero) #zavaroHero .hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.22) 0%,
+    transparent 28%,
+    transparent 66%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+}
+
+/* Keep the homepage minimal: no extra headline, CTA, or scroll prompt. */
+body:has(#zavaroHero) #zavaroHero .hero-copy,
+body:has(#zavaroHero) #zavaroHero .hero-actions,
+body:has(#zavaroHero) #zavaroHero .hero-scroll {
+  display: none !important;
+}
+
+/* =========================================================
+   HOMEPAGE — CAMPAIGN NOTE
+========================================================= */
+
+body:has(#zavaroHero) #zavaroHero .hero-note {
+  position: absolute !important;
+  z-index: 4 !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: clamp(54px, 7vh, 82px) !important;
+  left: clamp(24px, 6vw, 90px) !important;
+
+  display: block !important;
+  width: auto !important;
+  max-width: min(80%, 720px) !important;
+  margin: 0 !important;
+  text-align: left !important;
+  transform: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+body:has(#zavaroHero) #zavaroHero .hero-note-label {
+  display: block !important;
+  margin: 0 !important;
+  color: #f5f0e8 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(22px, 2.5vw, 36px) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.1em !important;
+  line-height: 1.25 !important;
+  text-align: left !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.3) !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* =========================================================
+   HOMEPAGE — SLIDE PAGINATION
+========================================================= */
+
+body:has(#zavaroHero) #zavaroHero .hero-pagination {
+  position: absolute;
+  z-index: 5;
+  right: auto;
+  bottom: 24px;
+  left: clamp(24px, 6vw, 90px);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+body:has(#zavaroHero) #zavaroHero .hero-dot {
+  position: relative;
+  padding: 0 0 6px;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+body:has(#zavaroHero) #zavaroHero .hero-dot::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: rgba(255, 255, 255, 0.35);
+}
+
+body:has(#zavaroHero) #zavaroHero .hero-dot.active {
+  color: #fff;
+}
+
+body:has(#zavaroHero) #zavaroHero .hero-dot.active::after {
+  background: #fff;
+}
+
+/* =========================================================
+   RESPONSIVE HEADER AND HOMEPAGE HERO
+========================================================= */
+
+@media (max-width: 760px) {
+  .site-header {
+    height: 68px;
+    min-height: 68px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 0 16px;
+  }
+
+  .site-header > .brand {
+    grid-column: 1;
+    justify-self: start;
+    font-size: 19px;
+    letter-spacing: 0.18em;
+  }
+
+  .site-header > .main-nav {
+    display: none !important;
+  }
+
+  .site-header > .header-actions {
+    grid-column: 2;
+    justify-self: end;
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+    width: auto;
+    margin: 0;
+  }
+
+  .site-header .header-actions .icon-button {
+    display: inline-flex;
+    flex: 0 0 22px;
+    width: 22px;
+    height: 32px;
+  }
+
+  .site-header .header-actions .icon-button svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .site-header .header-actions .menu-button {
+    display: inline-flex;
+  }
+
+  .mega-menu,
+  .mobile-nav {
+    top: 68px;
+  }
+
+  body:has(#zavaroHero) .site-header {
+    height: 68px;
+    min-height: 68px;
+    padding: 0 16px;
+  }
+
+  body:has(#zavaroHero) #zavaroHero .hero-slide img {
+    object-position: 58% center;
+  }
+
+  body:has(#zavaroHero) #zavaroHero .hero-note {
+    bottom: 62px !important;
+    left: 22px !important;
+    max-width: 90% !important;
+  }
+
+  body:has(#zavaroHero) #zavaroHero .hero-note-label {
+    font-size: clamp(19px, 5vw, 26px) !important;
+    letter-spacing: 0.08em !important;
+    line-height: 1.3 !important;
+  }
+
+  body:has(#zavaroHero) #zavaroHero .hero-pagination {
+    bottom: 20px;
+    left: 22px;
+    gap: 13px;
+  }
+}
+
+@media (max-width: 360px) {
+  .site-header {
+    padding-inline: 12px;
+  }
+
+  .site-header > .brand {
+    font-size: 16px;
+    letter-spacing: 0.13em;
+  }
+
+  .site-header > .header-actions {
+    gap: 6px;
+  }
+
+  .site-header .header-actions .icon-button {
+    flex-basis: 20px;
+    width: 20px;
+  }
+
+  body:has(#zavaroHero) #zavaroHero .hero-note {
+    left: 16px !important;
+    bottom: 60px !important;
+  }
+
+  body:has(#zavaroHero) #zavaroHero .hero-pagination {
+    left: 16px;
+  }
+}
+
+/* Respect reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  body:has(#zavaroHero) #zavaroHero .hero-slide,
+  body:has(#zavaroHero) #zavaroHero .hero-slide img {
+    transition: none;
+  }
+}
+
+
+
+/* =========================================================
+   ZAVARO JOURNAL — LUXURY EDITORIAL
+========================================================= */
+
+.zv-journal {
+  --zv-paper: #f5f2ec;
+  --zv-ink: #28251f;
+  --zv-muted: #777168;
+  --zv-rule: rgba(40, 37, 31, 0.18);
+
+  color: var(--zv-ink);
+  background: var(--zv-paper);
+  overflow: hidden;
+}
+
+.zv-journal img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.zv-journal-kicker {
+  display: block;
+  font-family: "DM Sans", sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.19em;
+  line-height: 1.8;
+  text-transform: uppercase;
+}
+
+.zv-journal h1,
+.zv-journal h2,
+.zv-journal blockquote {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+}
+
+.zv-journal h1 em,
+.zv-journal h2 em,
+.zv-journal blockquote em {
+  font-weight: 500;
+}
+
+.zv-journal p {
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.95;
+}
+
+.zv-journal a {
+  text-decoration: none;
+}
+
+.zv-journal-light-link,
+.zv-journal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  width: fit-content;
+  padding-bottom: 9px;
+  border-bottom: 1px solid currentColor;
+  font-family: "DM Sans", sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.zv-journal-light-link {
+  color: #fff;
+}
+
+.zv-journal-link {
+  color: var(--zv-ink);
+}
+
+
+/* OPENING CAMPAIGN */
+
+.zv-journal-hero {
+  position: relative;
+  min-height: 690px;
+  height: min(86svh, 900px);
+  background: #38342e;
+  color: #fff;
+  isolation: isolate;
+}
+
+.zv-journal-hero > img,
+.zv-journal-hero-shade,
+.zv-journal-ending > img,
+.zv-journal-ending-shade {
+  position: absolute;
+  inset: 0;
+}
+
+.zv-journal-hero > img {
+  object-position: center 40%;
+}
+
+.zv-journal-hero-shade,
+.zv-journal-ending-shade {
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(15, 14, 12, 0.58),
+    rgba(15, 14, 12, 0.12) 75%
+  );
+}
+
+.zv-journal-hero-copy {
+  position: absolute;
+  z-index: 2;
+  left: clamp(26px, 9vw, 140px);
+  bottom: clamp(72px, 11vh, 120px);
+  max-width: 650px;
+}
+
+.zv-journal-hero-copy h1 {
+  margin-top: 25px;
+  font-size: clamp(55px, 8.5vw, 112px);
+  line-height: 0.98;
+}
+
+.zv-journal-hero-copy > p {
+  max-width: 350px;
+  margin: 25px 0 30px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.zv-journal-index {
+  position: absolute;
+  z-index: 2;
+  right: clamp(22px, 5vw, 70px);
+  bottom: 30px;
+  font-size: 9px;
+  letter-spacing: 0.13em;
+}
+
+
+/* INTRODUCTION */
+
+.zv-journal-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10%;
+  row-gap: 28px;
+  align-items: start;
+  padding: clamp(90px, 13vw, 180px) clamp(26px, 11vw, 160px);
+}
+
+.zv-journal-intro > .zv-journal-kicker {
+  grid-column: 1 / -1;
+}
+
+.zv-journal-intro h2 {
+  font-size: clamp(48px, 6.5vw, 84px);
+  line-height: 1.05;
+}
+
+.zv-journal-intro-copy {
+  max-width: 450px;
+  padding-top: 8px;
+}
+
+.zv-journal-intro-copy p:first-child {
+  margin-top: 0;
+}
+
+.zv-journal-intro-copy p + p {
+  margin-top: 22px;
+  color: var(--zv-muted);
+}
+
+
+/* FULL-WIDTH IMAGE */
+
+.zv-journal-full-image {
+  position: relative;
+  height: clamp(380px, 67vw, 800px);
+  margin: 0 clamp(14px, 3vw, 42px);
+  background: #ded8cf;
+}
+
+.zv-journal-full-image img {
+  object-position: center 42%;
+}
+
+.zv-journal-image-caption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+  font-size: 9px;
+  letter-spacing: 0.14em;
+}
+
+
+/* SPLIT STORY */
+
+.zv-journal-split {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: clamp(40px, 9vw, 135px);
+  padding: clamp(90px, 12vw, 165px) clamp(25px, 9vw, 130px);
+}
+
+.zv-journal-split-image {
+  height: clamp(430px, 62vw, 760px);
+  background: #ded8cf;
+  overflow: hidden;
+}
+
+.zv-journal-split-image img {
+  object-position: center;
+  transition: transform 0.8s ease;
+}
+
+.zv-journal-split-image:hover img {
+  transform: scale(1.025);
+}
+
+.zv-journal-split-copy {
+  max-width: 440px;
+}
+
+.zv-journal-split-copy h2,
+.zv-journal-detail-copy h2 {
+  margin-top: 28px;
+  font-size: clamp(48px, 6vw, 78px);
+  line-height: 1.03;
+}
+
+.zv-journal-split-copy p {
+  margin-top: 26px;
+}
+
+.zv-journal-split-copy p + p {
+  color: var(--zv-muted);
+}
+
+.zv-journal-split-copy .zv-journal-link {
+  margin-top: 22px;
+}
+
+
+/* EDITORIAL QUOTE */
+
+.zv-journal-quote {
+  padding: clamp(90px, 14vw, 190px) 22px;
+  text-align: center;
+  border-top: 1px solid var(--zv-rule);
+  border-bottom: 1px solid var(--zv-rule);
+}
+
+.zv-journal-quote blockquote {
+  margin-top: 35px;
+  font-size: clamp(36px, 6.7vw, 82px);
+  line-height: 1.2;
+}
+
+.zv-journal-quote-line {
+  display: block;
+  width: 36px;
+  height: 1px;
+  margin: 34px auto 22px;
+  background: var(--zv-ink);
+}
+
+.zv-journal-quote > p {
+  margin: 0;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+}
+
+
+/* DETAILS STORY */
+
+.zv-journal-detail {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  align-items: center;
+  gap: clamp(35px, 8vw, 115px);
+  padding: clamp(90px, 12vw, 165px) clamp(25px, 11vw, 155px);
+}
+
+.zv-journal-detail-image {
+  height: clamp(350px, 50vw, 620px);
+  background: #e1dcd3;
+}
+
+.zv-journal-detail-copy {
+  max-width: 430px;
+}
+
+.zv-journal-detail-copy p {
+  margin-top: 26px;
+}
+
+.zv-journal-detail-copy p + p {
+  color: var(--zv-muted);
+}
+
+
+/* CLOSING CAMPAIGN */
+
+.zv-journal-ending {
+  position: relative;
+  display: grid;
+  min-height: 600px;
+  height: min(76svh, 780px);
+  place-items: center;
+  overflow: hidden;
+  background: #37332d;
+  color: #fff;
+  text-align: center;
+  isolation: isolate;
+}
+
+.zv-journal-ending > img {
+  object-position: center 48%;
+}
+
+.zv-journal-ending-shade {
+  background: rgba(20, 18, 15, 0.43);
+}
+
+.zv-journal-ending-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  padding: 35px 24px;
+}
+
+.zv-journal-ending-copy h2 {
+  margin-top: 26px;
+  font-size: clamp(55px, 8vw, 100px);
+  line-height: 1;
+}
+
+.zv-journal-ending-copy p {
+  margin: 25px 0 30px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 760px) {
+  .zv-journal-hero {
+    height: 78svh;
+    min-height: 580px;
+  }
+
+  .zv-journal-hero > img {
+    object-position: 58% center;
+  }
+
+  .zv-journal-hero-shade {
+    background: linear-gradient(
+      0deg,
+      rgba(15, 14, 12, 0.65),
+      rgba(15, 14, 12, 0.04) 90%
+    );
+  }
+
+  .zv-journal-hero-copy {
+    right: 24px;
+    bottom: 82px;
+    left: 24px;
+  }
+
+  .zv-journal-hero-copy h1 {
+    font-size: clamp(52px, 13vw, 78px);
+  }
+
+  .zv-journal-index {
+    right: 24px;
+    bottom: 26px;
+  }
+
+  .zv-journal-intro {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 90px 26px;
+  }
+
+  .zv-journal-intro > .zv-journal-kicker {
+    grid-column: auto;
+  }
+
+  .zv-journal-intro h2 {
+    font-size: clamp(50px, 12vw, 72px);
+  }
+
+  .zv-journal-intro-copy {
+    max-width: 100%;
+  }
+
+  .zv-journal-full-image {
+    height: 115vw;
+    max-height: 600px;
+    margin: 0 12px;
+  }
+
+  .zv-journal-split,
+  .zv-journal-detail {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    padding: 85px 25px;
+  }
+
+  .zv-journal-split-image {
+    height: 115vw;
+    max-height: 620px;
+  }
+
+  .zv-journal-split-copy h2,
+  .zv-journal-detail-copy h2 {
+    font-size: clamp(49px, 11vw, 70px);
+  }
+
+  .zv-journal-quote {
+    padding: 100px 20px;
+  }
+
+  .zv-journal-quote blockquote {
+    font-size: clamp(36px, 9vw, 56px);
+  }
+
+  .zv-journal-detail-image {
+    height: 100vw;
+    max-height: 540px;
+  }
+
+  .zv-journal-ending {
+    height: 75svh;
+    min-height: 540px;
+  }
+
+  .zv-journal-ending-copy h2 {
+    font-size: clamp(53px, 12vw, 78px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zv-journal-split-image img {
+    transition: none;
+  }
+}
+   
+
+
+/* =========================================================
+   ZAVARO — SOFT GLASS SCROLL-REVEAL HEADER
+========================================================= */
+
+.site-header {
+  position: fixed !important;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+
+  /* Refined, subtle glass */
+  background: rgba(250, 248, 244, 0.76) !important;
+  border: none !important;
+  box-shadow: 0 4px 24px rgba(24, 20, 15, 0.045) !important;
+  backdrop-filter: blur(14px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(125%) !important;
+
+  transform: translateY(0);
+  transition:
+    transform 0.38s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+/* Hide while scrolling down */
+.site-header.header-hidden {
+  transform: translateY(-110%);
+  pointer-events: none;
+}
+
+/* Homepage: retain transparency over the hero at the top */
+body:has(#zavaroHero) .site-header {
+  position: fixed !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Restore soft glass after moving beyond the homepage hero */
+body:has(#zavaroHero) .site-header.header-scrolled {
+  background: rgba(250, 248, 244, 0.76) !important;
+  box-shadow: 0 4px 24px rgba(24, 20, 15, 0.045) !important;
+  backdrop-filter: blur(14px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(125%) !important;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    transition: none;
+  }
+}
+ 
+/* ZAVARO: remove the circle around the shopping bag */
+.site-header .header-actions button.icon-button.bag-button {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Remove decorative circles */
+.site-header .header-actions button.icon-button.bag-button::before,
+.site-header .header-actions button.icon-button.bag-button::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Keep the bag outline crisp */
+.site-header .header-actions button.icon-button.bag-button svg {
+  fill: none !important;
+  stroke: currentColor !important;
+  width: 22px !important;
+  height: 22px !important;
+}
+
+/* Hide the shopping bag item count */
+.site-header .header-actions #bagCount {
+  display: none !important;
+}

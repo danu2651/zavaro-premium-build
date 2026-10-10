@@ -206,6 +206,67 @@ function save() {
   renderFavorites();
 }
 
+let heroSlideTimer = null;
+let heroSlideIndex = 0;
+
+function startHeroSlideshow() {
+  if (heroSlideTimer) {
+    clearInterval(heroSlideTimer);
+    heroSlideTimer = null;
+  }
+
+  const hero = document.querySelector("#zavaroHero");
+
+  if (!hero) {
+    return;
+  }
+
+  const slides = [...hero.querySelectorAll(".hero-slide")];
+  const dots = [...hero.querySelectorAll("[data-hero-slide]")];
+
+  if (!slides.length || slides.length !== dots.length) {
+    return;
+  }
+
+  heroSlideIndex = 0;
+
+  function showSlide(index) {
+    heroSlideIndex = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+      const active = i === heroSlideIndex;
+
+      slide.classList.toggle("active", active);
+      slide.setAttribute("aria-hidden", String(!active));
+    });
+
+    dots.forEach((dot, i) => {
+      const active = i === heroSlideIndex;
+
+      dot.classList.toggle("active", active);
+      dot.setAttribute("aria-pressed", String(active));
+    });
+  }
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      showSlide(Number(dot.dataset.heroSlide));
+
+      clearInterval(heroSlideTimer);
+
+      heroSlideTimer = setInterval(() => {
+        showSlide(heroSlideIndex + 1);
+      }, 6000);
+    });
+  });
+
+  showSlide(0);
+
+  heroSlideTimer = setInterval(() => {
+    showSlide(heroSlideIndex + 1);
+  }, 6000);
+}
+
 /* =========================================================
    BODY LOCK
 ========================================================= */
@@ -693,116 +754,132 @@ function renderProducts(list) {
 
 function home() {
   return `
+    <section
+      class="hero"
+      id="zavaroHero"
+      aria-label="ZAVARO fashion campaign"
+    >
+      <!-- Full-screen campaign slideshow -->
+      <div class="hero-slides">
 
-    <section class="hero">
-
-      <div class="hero-media">
-        <img
-          src="assets/images/board_4_crops/hoodie_back1.jpg"
-          alt="ZAVARO Collection 001"
-        >
-      </div>
-
-      <div class="hero-overlay"></div>
-
-      <div class="hero-copy">
-
-        <span class="eyebrow">
-          COLLECTION 001 / 2026
-        </span>
-
-        <h1>
-          The everyday<br>
-          <em>uniform.</em>
-        </h1>
-
-        <div class="hero-actions">
-
-          <a
-            class="dark-button"
-            href="#collection/001"
+        <div class="hero-slide active" aria-hidden="false">
+          <img
+            src="assets/images/board_4_crops/hoodie_back1.jpg"
+            alt="ZAVARO Collection 001 campaign"
+            fetchpriority="high"
           >
-            SHOP COLLECTION
-            <span>↗</span>
-          </a>
+        </div>
+    
 
-          <a
-            class="text-link"
-            href="#world/mens"
+
+
+
+        <div class="hero-slide" aria-hidden="true">
+          <img
+            src="assets/images/board_4_crops/image.jpg"
+            alt="ZAVARO contemporary fashion campaign"
+            loading="lazy"
           >
-            EXPLORE ZAVARO
-          </a>
+        </div>
 
+        <div class="hero-slide" aria-hidden="true">
+          <img
+            src="assets/images/board_2_crops/collection_cover4.jpg"
+            alt="ZAVARO editorial fashion collection"
+            loading="lazy"
+          >
         </div>
 
       </div>
 
-      <div class="hero-note">
-        ZAVARO — 001
-      </div>
+      <!-- Subtle overlay for image depth and header readability -->
+      <div class="hero-overlay" aria-hidden="true"></div>
 
+    
+<!-- Minimal bottom-left campaign note -->
+<div class="hero-note">
+  <span class="hero-note-label">EVERYDAY,REFINED.</span>
+</div>
+
+
+
+      
+
+      <!-- Slideshow controls -->
+      <div
+        class="hero-pagination"
+        aria-label="Choose hero image"
+      >
+        <button
+          class="hero-dot active"
+          type="button"
+          data-hero-slide="0"
+          aria-label="Show image 1"
+          aria-pressed="true"
+        >01</button>
+
+        <button
+          class="hero-dot"
+          type="button"
+          data-hero-slide="1"
+          aria-label="Show image 2"
+          aria-pressed="false"
+        >02</button>
+
+        <button
+          class="hero-dot"
+          type="button"
+          data-hero-slide="2"
+          aria-label="Show image 3"
+          aria-pressed="false"
+        >03</button>
+      </div>
     </section>
 
-
-    <section class="editorial">
-
-      <div class="editorial-media">
-        <img
-          src="assets/images/board_2_crops/collection_cover4.jpg"
-          alt="ZAVARO editorial story"
-          loading="lazy"
-        >
-      </div>
-
-      <div class="editorial-copy">
-
-        <span class="eyebrow">
-          THE ZAVARO STANDARD
-        </span>
-
-        <h2>
-          Less noise.<br>
-          <em>More presence.</em>
-        </h2>
-
-        <p>
-          Relaxed silhouettes, substantial fabric and quiet identity.
-          A wardrobe designed to work as one complete language —
-          confident without demanding attention.
-        </p>
-
-        <a
-          class="text-link"
-          href="#collection/001"
-        >
-          SHOP COLLECTION ↗
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <section class="worlds">
-
+    <!-- Featured products -->
+    <section class="product-editorial">
       <div class="section-head">
-
         <div>
-
-          <span class="eyebrow">
-            EXPLORE ZAVARO
-          </span>
-
-          <h2>
-            SHOP BY WORLD
-          </h2>
-
+          <span class="eyebrow">COLLECTION 001</span>
+          <h2>FEATURED PIECES</h2>
         </div>
 
+        <a class="text-link" href="#shop/all">VIEW ALL ↗</a>
+      </div>
+
+      <div class="product-grid">
+        ${renderProducts(products.slice(0, 3))}
+      </div>
+    </section>
+
+    <!-- Editorial campaign -->
+    <section class="campaign">
+      <img
+        src="assets/images/board_2_crops/collection_cover4.jpg"
+        alt="ZAVARO campaign"
+        loading="lazy"
+      >
+
+      <div class="campaign-copy">
+        <span class="eyebrow">ZAVARO / 2026</span>
+        <h2>The form of<br><em>everyday.</em></h2>
+
+        <a class="text-link" href="#collection/editorial">
+          ENTER EDITORIAL ↗
+        </a>
+      </div>
+    </section>
+
+    <!-- Shop by category -->
+    <section class="worlds">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">EXPLORE ZAVARO</span>
+          <h2>SHOP BY WORLD</h2>
+        </div>
       </div>
 
       <div class="world-grid">
-
         ${[
           ["MENS", "assets/images/board_4_crops/image.jpg", "world/mens"],
           [
@@ -814,221 +891,90 @@ function home() {
         ]
           .map(
             (item) => `
-                <a
-                  class="world-card"
-                  href="#${item[2]}"
+              <a class="world-card" href="#${item[2]}">
+                <img
+                  src="${item[1]}"
+                  alt="${item[0]}"
+                  loading="lazy"
                 >
 
-                  <img
-                    src="${item[1]}"
-                    alt="${item[0]}"
-                    loading="lazy"
-                  >
-
-                  <div class="world-info">
-
-                    <strong>
-                      ${item[0]}
-                    </strong>
-
-                    <span>
-                      SHOP ${item[0]} →
-                    </span>
-
-                  </div>
-
-                </a>
-              `,
+                <div class="world-info">
+                  <strong>${item[0]}</strong>
+                  <span>SHOP ${item[0]} →</span>
+                </div>
+              </a>
+            `,
           )
           .join("")}
-
       </div>
-
     </section>
 
-
+    <!-- Featured collection image -->
     <section class="feature-image">
-
       <img
         src="assets/images/board_4_crops/image.jpg"
-        alt="Collection 001"
+        alt="ZAVARO collection campaign"
         loading="lazy"
       >
 
       <div class="feature-image-copy">
+        <span class="eyebrow">COLLECTION 001</span>
+        <h2>Made for<br><em>every day.</em></h2>
 
-        <span class="eyebrow">
-          COLLECTION 001
-        </span>
-
-        <h2>
-          Built for<br>
-          every day.
-        </h2>
-
-        <a
-          class="text-link"
-          href="#shop/all"
-        >
-          SHOP THE COLLECTION ↗
+        <a class="text-link" href="#collection/001">
+          DISCOVER THE COLLECTION ↗
         </a>
-
       </div>
-
     </section>
 
-
-    <section class="product-editorial">
-
-      <div class="section-head">
-
-        <div>
-
-          <span class="eyebrow">
-            FOUNDATIONAL PIECES
-          </span>
-
-          <h2>
-            THE EDIT
-          </h2>
-
-        </div>
-
-        <a
-          class="text-link"
-          href="#shop/all"
-        >
-          VIEW ALL ↗
-        </a>
-
-      </div>
-
-      <div class="product-grid">
-        ${renderProducts(products.slice(0, 6))}
-      </div>
-
-    </section>
-
-
-    <section class="campaign">
-
-      <img
-        src="assets/images/board_2_crops/collection_cover4.jpg"
-        alt="ZAVARO campaign"
-        loading="lazy"
-      >
-
-      <div class="campaign-copy">
-
-        <span class="eyebrow">
-          ZAVARO / 2026
-        </span>
-
-        <h2>
-          The form of<br>
-          <em>everyday.</em>
-        </h2>
-
-        <a
-          class="text-link"
-          href="#collection/editorial"
-        >
-          ENTER EDITORIAL ↗
-        </a>
-
-      </div>
-
-    </section>
-
-
+    <!-- New arrivals -->
     <section class="arrivals">
-
       <div class="section-head">
-
         <div>
-
-          <span class="eyebrow">
-            JUST IN
-          </span>
-
-          <h2>
-            NEW ARRIVALS
-          </h2>
-
+          <span class="eyebrow">JUST IN</span>
+          <h2>NEW ARRIVALS</h2>
         </div>
 
-        <a
-          class="text-link"
-          href="#collection/new"
-        >
-          VIEW NEW ↗
-        </a>
-
+        <a class="text-link" href="#collection/new">VIEW NEW ↗</a>
       </div>
 
       <div class="horizontal-grid">
-
         ${renderProducts(
           products
             .filter((product) => product.badge === "New")
             .concat(products.slice(0, 1))
             .slice(0, 3),
         )}
-
       </div>
-
     </section>
 
-
+    <!-- Brand story -->
     <section class="brand-story">
-
-      <h2>
-        Wear less.<br>
-        <em>Mean more.</em>
-      </h2>
+      <h2>Wear less.<br><em>Mean more.</em></h2>
 
       <div>
-
-        <span class="eyebrow">
-          THE ZAVARO IDEA
-        </span>
+        <span class="eyebrow">THE ZAVARO IDEA</span>
 
         <p>
-          ZAVARO creates modern essentials around proportion,
-          material and presence. The intention is simple:
-          fewer distractions, better pieces, a wardrobe with
-          a point of view.
+          ZAVARO creates modern essentials around proportion, material
+          and presence. The intention is simple: fewer distractions,
+          better pieces, a wardrobe with a point of view.
         </p>
 
-        <a
-          class="text-link"
-          href="#collection/editorial"
-        >
+        <a class="text-link" href="#collection/editorial">
           READ OUR STORY ↗
         </a>
-
       </div>
-
     </section>
 
-
+    <!-- Newsletter -->
     <section class="newsletter">
-
       <div>
-
-        <span class="eyebrow">
-          ZAVARO NOTES
-        </span>
-
-        <h2>
-          Good things,<br>
-          <em>occasionally.</em>
-        </h2>
-
+        <span class="eyebrow">ZAVARO NOTES</span>
+        <h2>Good things,<br><em>occasionally.</em></h2>
       </div>
 
       <form id="newsletterForm">
-
         <input
           type="email"
           id="newsletterEmail"
@@ -1036,14 +982,9 @@ function home() {
           required
         >
 
-        <button>
-          JOIN US ↗
-        </button>
-
+        <button type="submit">JOIN US ↗</button>
       </form>
-
     </section>
-
   `;
 }
 
@@ -1118,11 +1059,18 @@ function productGridView(title, subtitle, list, filter = true) {
    WORLD VIEW
 ========================================================= */
 
+/* =========================================================
+   WORLD VIEW — MEN / WOMEN / KIDS
+   Single category hero followed directly by products.
+========================================================= */
+
 function worldView(world) {
   const title = world.toUpperCase();
 
+  // Keep the existing product selection behavior.
   const list = world === "kids" ? products.slice(0, 5) : products;
 
+  // Preserve the existing category hero images.
   const heroImage =
     world === "mens"
       ? "assets/images/board_4_crops/image.jpg"
@@ -1131,116 +1079,238 @@ function worldView(world) {
         : "assets/images/board_1_crops/details1.jpg";
 
   return `
-
+    <!-- Category hero -->
     <section class="page-hero">
-
       <img
         src="${heroImage}"
         alt="${title}"
       >
 
       <div class="page-hero-copy">
-
         <span class="eyebrow">
           ${world === "kids" ? "ZAVARO JUNIOR" : "COLLECTION 001"}
         </span>
 
-        <h1>
-          ${title}
-        </h1>
-
+        <h1>${title}</h1>
       </div>
-
     </section>
 
-
-    <section class="section">
-
-      <div class="section-head">
-
-        <div>
-
-          <span class="eyebrow">
-            FEATURED ${title}
-          </span>
-
-          <h2>
-            THE WORLD
-          </h2>
-
-        </div>
-
-      </div>
-
-
-      <div class="editorial">
-
-        <div class="editorial-media">
-
-          <img
-            src="${list[0].image}"
-            alt=""
-            loading="lazy"
-          >
-
-        </div>
-
-
-        <div class="editorial-copy">
-
-          <span class="eyebrow">
-            ${title} / 001
-          </span>
-
-          <h2>
-            Quiet form.<br>
-            <em>Strong identity.</em>
-          </h2>
-
-          <p>
-            Discover the ZAVARO silhouette through considered
-            essentials, understated details and everyday proportions.
-          </p>
-
-          <a
-            class="text-link"
-            href="#shop/all"
-          >
-            SHOP ${title} ↗
-          </a>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
+    <!-- Products appear immediately after the hero -->
     <section class="shop-view">
-
       <div class="section-head">
-
         <div>
-
-          <span class="eyebrow">
-            SELECTED PIECES
-          </span>
-
-          <h2>
-            ${title}
-          </h2>
-
+          <span class="eyebrow">SELECTED PIECES</span>
+          <h2>${title}</h2>
         </div>
-
       </div>
-
 
       <div class="product-grid">
         ${renderProducts(list)}
       </div>
-
     </section>
+  `;
+}
 
+/* =========================================================
+   COLLECTION VIEW
+========================================================= */
+
+/* =========================================================
+   ZAVARO JOURNAL — EDITORIAL STORY
+========================================================= */
+
+function journalView() {
+  return `
+    <main class="zv-journal">
+
+      <!-- OPENING CAMPAIGN -->
+      <section class="zv-journal-hero">
+        <img
+          src="assets/images/board_4_crops/image.jpg"
+          alt="ZAVARO contemporary fashion campaign"
+          fetchpriority="high"
+        >
+
+        <div class="zv-journal-hero-shade"></div>
+
+        <div class="zv-journal-hero-copy">
+          <span class="zv-journal-kicker">
+            ZAVARO JOURNAL — NO. 001
+          </span>
+
+          <h1>
+            The art of<br>
+            <em>everyday.</em>
+          </h1>
+
+          <p>
+            A study in simplicity, presence and the things
+            we choose to wear.
+          </p>
+
+          <a href="#journal-story" class="zv-journal-light-link">
+            EXPLORE THE STORY <span>↓</span>
+          </a>
+        </div>
+
+        <span class="zv-journal-index">01 / THE PERSPECTIVE</span>
+      </section>
+
+
+      <!-- INTRODUCTION -->
+      <section class="zv-journal-intro" id="journal-story">
+        <span class="zv-journal-kicker">THE ZAVARO PERSPECTIVE</span>
+
+        <h2>
+          Less, but<br>
+          <em>with intention.</em>
+        </h2>
+
+        <div class="zv-journal-intro-copy">
+          <p>
+            Personal style does not need to announce itself.
+            Sometimes, it is found in a silhouette, the weight
+            of a fabric, or the quiet confidence of a familiar piece.
+          </p>
+
+          <p>
+            ZAVARO explores modern essentials through considered
+            proportions, understated details and clothing made
+            to feel natural in everyday life.
+          </p>
+        </div>
+      </section>
+
+
+      <!-- FULL-WIDTH IMAGE STORY -->
+      <section class="zv-journal-full-image">
+        <img
+          src="assets/images/board_4_crops/hoodie_back1.jpg"
+          alt="ZAVARO collection and silhouette"
+          loading="lazy"
+        >
+
+        <div class="zv-journal-image-caption">
+          <span>COLLECTION 001</span>
+          <span>FORM IN FOCUS — 01</span>
+        </div>
+      </section>
+
+
+      <!-- SILHOUETTE STORY -->
+      <section class="zv-journal-split">
+        <div class="zv-journal-split-image">
+          <img
+            src="assets/images/board_2_crops/collection_cover4.jpg"
+            alt="ZAVARO fashion and contemporary proportions"
+            loading="lazy"
+          >
+        </div>
+
+        <div class="zv-journal-split-copy">
+          <span class="zv-journal-kicker">01 / THE SILHOUETTE</span>
+
+          <h2>
+            A shape<br>
+            of your <em>own.</em>
+          </h2>
+
+          <p>
+            The way a garment falls can change the feeling of an
+            entire look. Relaxed proportions, clean lines and
+            considered volume create a balance between comfort
+            and character.
+          </p>
+
+          <p>
+            Not designed to follow every moment, but to become
+            part of your own.
+          </p>
+
+          <a href="#shop/all" class="zv-journal-link">
+            DISCOVER THE PIECES ↗
+          </a>
+        </div>
+      </section>
+
+
+      <!-- EDITORIAL STATEMENT -->
+      <section class="zv-journal-quote">
+        <span class="zv-journal-kicker">A ZAVARO NOTE</span>
+
+        <blockquote>
+          “The strongest statement<br>
+          is often the <em>simplest.</em>”
+        </blockquote>
+
+        <span class="zv-journal-quote-line"></span>
+
+        <p>BUILT AROUND THE EVERYDAY.</p>
+      </section>
+
+
+      <!-- SECOND IMAGE STORY -->
+      <section class="zv-journal-detail">
+        <div class="zv-journal-detail-image">
+          <img
+            src="assets/images/board_1_crops/details1.jpg"
+            alt="Details from the ZAVARO collection"
+            loading="lazy"
+          >
+        </div>
+
+        <div class="zv-journal-detail-copy">
+          <span class="zv-journal-kicker">02 / THE DETAILS</span>
+
+          <h2>
+            Thoughtful<br>
+            by <em>design.</em>
+          </h2>
+
+          <p>
+            Texture. Weight. Construction. The smallest details
+            influence how a piece looks, feels and becomes part
+            of your wardrobe.
+          </p>
+
+          <p>
+            Our perspective is simple: let the form speak,
+            let the details reward a closer look, and leave
+            room for your own interpretation.
+          </p>
+        </div>
+      </section>
+
+
+      <!-- CLOSING CAMPAIGN -->
+      <section class="zv-journal-ending">
+        <img
+          src="assets/images/board_4_crops/image.jpg"
+          alt="ZAVARO Collection 001 campaign"
+          loading="lazy"
+        >
+
+        <div class="zv-journal-ending-shade"></div>
+
+        <div class="zv-journal-ending-copy">
+          <span class="zv-journal-kicker">THE ZAVARO IDEA</span>
+
+          <h2>
+            Wear less.<br>
+            <em>Mean more.</em>
+          </h2>
+
+          <p>
+            Find your uniform. Make it your own.
+          </p>
+
+          <a href="#collection/001" class="zv-journal-light-link">
+            DISCOVER COLLECTION 001 ↗
+          </a>
+        </div>
+      </section>
+
+    </main>
   `;
 }
 
@@ -1249,6 +1319,11 @@ function worldView(world) {
 ========================================================= */
 
 function collectionView(slug) {
+  // Editorial has its own complete storytelling page.
+  if (slug === "editorial") {
+    return journalView();
+  }
+
   const blocks = [
     [
       "COLLECTION 001",
@@ -1265,11 +1340,6 @@ function collectionView(slug) {
       "THE LATEST FORM",
       "assets/images/board_1_crops/details1.jpg",
     ],
-    [
-      "EDITORIAL",
-      "THE ZAVARO JOURNAL",
-      "assets/images/board_4_crops/image.jpg",
-    ],
   ];
 
   let chosen;
@@ -1278,21 +1348,16 @@ function collectionView(slug) {
     chosen = blocks.slice(2, 3);
   } else if (slug === "essentials") {
     chosen = blocks.slice(1, 2);
-  } else if (slug === "editorial") {
-    chosen = blocks.slice(3);
   } else {
     chosen = blocks;
   }
 
   return `
-
     <div class="collection-view">
-
       ${chosen
         .map(
           (block, index) => `
             <section class="collection-block">
-
               <img
                 src="${block[2]}"
                 alt="${block[0]}"
@@ -1300,31 +1365,18 @@ function collectionView(slug) {
               >
 
               <div class="collection-block-copy">
+                <span class="eyebrow">${block[0]}</span>
+                <h2>${block[1]}</h2>
 
-                <span class="eyebrow">
-                  ${block[0]}
-                </span>
-
-                <h2>
-                  ${block[1]}
-                </h2>
-
-                <a
-                  class="text-link"
-                  href="#shop/all"
-                >
+                <a class="text-link" href="#shop/all">
                   SHOP COLLECTION ↗
                 </a>
-
               </div>
-
             </section>
           `,
         )
         .join("")}
-
     </div>
-
   `;
 }
 
@@ -1453,6 +1505,9 @@ function route() {
   }
 
   $("#app").innerHTML = view;
+  if (type === "home") {
+    startHeroSlideshow();
+  }
 
   window.scrollTo({
     top: 0,
@@ -1875,3 +1930,64 @@ window.addEventListener("load", () => {
   renderFavorites();
   route();
 });
+
+/* =========================================================
+   ZAVARO — HIDE ON SCROLL DOWN, REVEAL ON SCROLL UP
+========================================================= */
+
+(() => {
+  const header = document.querySelector("#siteHeader");
+
+  if (!header || header.dataset.scrollRevealReady === "true") {
+    return;
+  }
+
+  header.dataset.scrollRevealReady = "true";
+
+  let previousScrollY = window.scrollY;
+  let ticking = false;
+
+  function updateHeader() {
+  const currentScrollY = window.scrollY;
+  const difference = currentScrollY - previousScrollY;
+  const hero = document.querySelector("#zavaroHero");
+  const heroBottom = hero
+    ? hero.getBoundingClientRect().bottom
+    : 0;
+
+  /* Keep the homepage header transparent over the hero */
+  header.classList.toggle(
+    "header-scrolled",
+    !hero || heroBottom <= header.offsetHeight
+  );
+
+  /* Always show the header at the top */
+  if (currentScrollY <= 20) {
+    header.classList.remove("header-hidden");
+  } else if (difference > 5) {
+    header.classList.add("header-hidden");
+  } else if (difference < -5) {
+    header.classList.remove("header-hidden");
+  }
+
+  previousScrollY = currentScrollY;
+  ticking = false;
+}
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+
+  /* Reset the header after navigating to another page */
+  window.addEventListener("hashchange", () => {
+    header.classList.remove("header-hidden");
+    previousScrollY = window.scrollY;
+  });
+})();

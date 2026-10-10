@@ -1,927 +1,587 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
 
-  <meta
-    name="description"
-    content="ZAVARO — contemporary luxury streetwear and modern everyday fashion."
-  >
+    <meta
+      name="description"
+      content="ZAVARO — contemporary luxury streetwear and modern everyday fashion."
+    />
 
-  <title>ZAVARO — Collection 001</title>
+    <title>ZAVARO — Collection 001</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap"
-    rel="stylesheet"
-  >
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="hero.css">
-</head>
+    
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="hero.css" />
+    <link rel="stylesheet" href="zavaro-hero-overrides.css" />
+  </head>
 
-<body>
-
-  <!-- =========================================================
+  <body>
+    <!-- =========================================================
        ANNOUNCEMENT
   ========================================================== -->
 
-  <div class="announcement">
-    COLLECTION 001
-    <span>•</span>
-    REBIRTH
-    <span>•</span>
-    EST. 2026
-    <span>•</span>
-    THE EVERYDAY UNIFORM
-  </div>
+    <div class="announcement">
+      COLLECTION 001
+      <span>•</span>
+      REBIRTH
+      <span>•</span>
+      EST. 2026
+      <span>•</span>
+      THE EVERYDAY UNIFORM
+    </div>
 
-
-  <!-- =========================================================
+    <!-- =========================================================
        HEADER
   ========================================================== -->
 
-  <header class="site-header" id="siteHeader">
+    <header class="site-header" id="siteHeader">
+      <!-- LEFT: BRAND -->
+      <a class="brand" href="#home" aria-label="ZAVARO home"> ZAVARO </a>
 
-    <div class="header-side header-left">
+      <!-- CENTER: NAVIGATION -->
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#home">Home</a>
 
-      <!-- HOME -->
-      <a href="#home">HOME</a>
+        <button class="nav-trigger" data-menu="shopMenu">Shop</button>
 
-      <!-- SHOP -->
-      <button
-        class="nav-trigger"
-        data-menu="shopMenu"
-      >
-        SHOP
-      </button>
+        <button class="nav-trigger" data-menu="collectionMenu">
+          Collections
+        </button>
 
-      <!-- COLLECTIONS -->
-      <button
-        class="nav-trigger"
-        data-menu="collectionMenu"
-      >
-        COLLECTIONS
-      </button>
+        <a href="#service/about">About</a>
+        <a href="#collection/editorial">Journal</a>
+      </nav>
 
-      <!-- WORLDS -->
-      <a href="#world/mens">MENS</a>
-      <a href="#world/womens">WOMENS</a>
-      <a href="#world/kids">KIDS</a>
+      <!-- RIGHT: OUTLINE ICONS -->
+      <div class="header-actions">
+        <button
+          class="icon-button"
+          data-action="search"
+          aria-label="Search ZAVARO"
+          title="Search"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10.8" cy="10.8" r="6.5"></circle>
+            <path d="m16 16 4.2 4.2"></path>
+          </svg>
+        </button>
 
-    </div>
+        <button
+          class="icon-button"
+          data-action="favorites"
+          aria-label="Open wishlist"
+          title="Wishlist"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M20.5 8.8c0 5.1-8.5 10-8.5 10s-8.5-4.9-8.5-10a4.6 4.6 0 0 1 8.5-2.1 4.6 4.6 0 0 1 8.5 2.1Z"
+            ></path>
+          </svg>
+        </button>
+        <button
+          class="icon-button bag-button"
+          data-action="bag"
+          aria-label="Open shopping bag"
+          title="Shopping bag"
+        >
+          <svg
+            class="bag-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M5 8h14l1 13H4L5 8Z" />
+            <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+          </svg>
+          <span class="count" id="bagCount">0</span>
+        </button>
 
-
-    <!-- ZAVARO LOGO -->
-    <a
-      class="brand"
-      href="#home"
-      aria-label="ZAVARO home"
-    >
-      ZAVARO
-    </a>
-
-
-    <div class="header-side header-right">
-
-      <!-- SEARCH -->
-      <button data-action="search">
-        SEARCH
-      </button>
-
-      <!-- ACCOUNT -->
-      <button data-action="account">
-        ACCOUNT
-      </button>
-
-      <!-- FAVORITES -->
-      <button
-        data-action="favorites"
-        aria-label="Open favorites"
-      >
-        ♡ FAVORITES
-      </button>
-
-      <!-- BAG -->
-      <button data-action="bag">
-        BAG
-        <span class="count" id="bagCount">0</span>
-      </button>
-
-      <!-- MOBILE MENU -->
-      <button
-        class="mobile-menu-btn"
-        data-action="mobileMenu"
-        aria-label="Open menu"
-      >
-        <i></i>
-        <i></i>
-      </button>
-
-    </div>
-
-  </header>
-
-
-  <!-- =========================================================
+        <button
+          class="icon-button menu-button"
+          data-action="mobileMenu"
+          aria-label="Open menu"
+          title="Menu"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 8h18M3 16h18"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+    <!-- =========================================================
        SHOP MEGA MENU
   ========================================================== -->
 
-  <div class="mega-menu" id="shopMenu">
-
-    <div class="mega-inner">
-
-      <div>
-
-        <span class="mega-label">
-          SHOP
-        </span>
-
-        <a href="#shop/all">
-          ALL PIECES
-        </a>
-
-        <a href="#shop/tops">
-          TOPS
-        </a>
-
-        <a href="#shop/hoodies">
-          HOODIES
-        </a>
-
-      </div>
-
-
-      <div>
-
-        <span class="mega-label">
-          LOWER
-        </span>
-
-        <a href="#shop/bottoms">
-          BOTTOMS
-        </a>
-
-        <a href="#shop/outerwear">
-          OUTERWEAR
-        </a>
-
-        <a href="#shop/headwear">
-          HEADWEAR
-        </a>
-
-      </div>
-
-
-      <div class="mega-feature">
-
-        <img
-          src="assets/images/board_4_crops/image.jpg"
-          alt=""
-        >
-
+    <div class="mega-menu" id="shopMenu">
+      <div class="mega-inner">
         <div>
+          <span class="mega-label"> SHOP </span>
 
-          <small>
-            THE EVERYDAY UNIFORM
-          </small>
+          <a href="#shop/all"> ALL PIECES </a>
 
-          <strong>
-            QUIET FORM.<br>
-            STRONG PRESENCE.
-          </strong>
+          <a href="#shop/tops"> TOPS </a>
 
+          <a href="#shop/hoodies"> HOODIES </a>
         </div>
 
-      </div>
+        <div>
+          <span class="mega-label"> LOWER </span>
 
+          <a href="#shop/bottoms"> BOTTOMS </a>
+
+          <a href="#shop/outerwear"> OUTERWEAR </a>
+
+          <a href="#shop/headwear"> HEADWEAR </a>
+        </div>
+
+        <div class="mega-feature">
+          <img src="assets/images/board_4_crops/image.jpg" alt="" />
+
+          <div>
+            <small> THE EVERYDAY UNIFORM </small>
+
+            <strong>
+              QUIET FORM.<br />
+              STRONG PRESENCE.
+            </strong>
+          </div>
+        </div>
+      </div>
     </div>
 
-  </div>
-
-
-  <!-- =========================================================
+    <!-- =========================================================
        COLLECTION MEGA MENU
   ========================================================== -->
 
-  <div class="mega-menu" id="collectionMenu">
-
-    <div class="mega-inner collection-mega">
-
-      <a href="#collection/001">
-        <span>01</span>
-        <strong>COLLECTION 001</strong>
-        <small>THE EVERYDAY UNIFORM</small>
-      </a>
-
-      <a href="#collection/essentials">
-        <span>02</span>
-        <strong>ESSENTIALS</strong>
-        <small>FOUNDATIONAL PIECES</small>
-      </a>
-
-      <a href="#collection/new">
-        <span>03</span>
-        <strong>NEW ARRIVALS</strong>
-        <small>THE LATEST FORM</small>
-      </a>
-
-      <a href="#collection/editorial">
-        <span>04</span>
-        <strong>EDITORIAL</strong>
-        <small>THE ZAVARO JOURNAL</small>
-      </a>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================================================
-       MOBILE NAVIGATION
-  ========================================================== -->
-
-  <div class="mobile-nav" id="mobileNav">
-
-    <!-- HOME -->
-    <a href="#home">
-      HOME
-    </a>
-
-    <!-- SHOP -->
-    <a href="#shop/all">
-      SHOP
-    </a>
-
-    <!-- COLLECTIONS -->
-    <a href="#collection/001">
-      COLLECTIONS
-    </a>
-
-    <!-- WORLDS -->
-    <a href="#world/mens">
-      MENS
-    </a>
-
-    <a href="#world/womens">
-      WOMENS
-    </a>
-
-    <a href="#world/kids">
-      KIDS
-    </a>
-
-
-    <!-- SHOP CATEGORIES -->
-    <div class="mobile-sub">
-
-      <a href="#shop/tops">
-        TOPS
-      </a>
-
-      <a href="#shop/bottoms">
-        BOTTOMS
-      </a>
-
-      <a href="#shop/hoodies">
-        HOODIES
-      </a>
-
-      <a href="#shop/outerwear">
-        OUTERWEAR
-      </a>
-
-    </div>
-
-
-    <!-- CLOSE -->
-    <button data-action="mobileClose">
-      CLOSE ×
-    </button>
-
-  </div>
-
-
-  <!-- =========================================================
-       MAIN APPLICATION
-  ========================================================== -->
-
-  <main id="app"></main>
-
-
-  <!-- =========================================================
-       FOOTER
-  ========================================================== -->
-
-  <footer class="footer">
-
-    <div class="footer-top">
-
-
-      <!-- BRAND -->
-      <div class="footer-brand">
-
-        <a
-          href="#home"
-          class="footer-logo"
-        >
-          ZAVARO
-        </a>
-
-        <p>
-          Built to rise.<br>
-          Wear confidence.
-        </p>
-
-      </div>
-
-
-      <!-- SHOP -->
-      <div>
-
-        <span>
-          SHOP
-        </span>
-
-        <a href="#shop/all">
-          All pieces
-        </a>
-
+    <div class="mega-menu" id="collectionMenu">
+      <div class="mega-inner collection-mega">
         <a href="#collection/001">
-          Collection 001
+          <span>01</span>
+          <strong>COLLECTION 001</strong>
+          <small>THE EVERYDAY UNIFORM</small>
+        </a>
+
+        <a href="#collection/essentials">
+          <span>02</span>
+          <strong>ESSENTIALS</strong>
+          <small>FOUNDATIONAL PIECES</small>
         </a>
 
         <a href="#collection/new">
-          New arrivals
+          <span>03</span>
+          <strong>NEW ARRIVALS</strong>
+          <small>THE LATEST FORM</small>
         </a>
 
+        <a href="#collection/editorial">
+          <span>04</span>
+          <strong>EDITORIAL</strong>
+          <small>THE ZAVARO JOURNAL</small>
+        </a>
       </div>
-
-
-      <!-- WORLD -->
-      <div>
-
-        <span>
-          WORLD
-        </span>
-
-        <a href="#world/mens">
-          Mens
-        </a>
-
-        <a href="#world/womens">
-          Womens
-        </a>
-
-        <a href="#world/kids">
-          Kids
-        </a>
-
-      </div>
-
-
-      <!-- CLIENT SERVICES -->
-      <div>
-
-        <span>
-          CLIENT SERVICES
-        </span>
-
-        <a href="mailto:aseminew@zavarogmail.com">
-          Contact
-        </a>
-
-        <a href="#service/shipping">
-          Shipping
-        </a>
-
-        <a href="#service/returns">
-          Returns
-        </a>
-
-        <a href="#service/size">
-          Size guide
-        </a>
-
-      </div>
-
-
-      <!-- SOCIAL -->
-      <div>
-
-        <span>
-          FOLLOW
-        </span>
-
-        <a
-          href="#"
-          onclick="return false"
-        >
-          Instagram
-        </a>
-
-        <a
-          href="#"
-          onclick="return false"
-        >
-          TikTok
-        </a>
-
-      </div>
-
     </div>
 
+    <!-- =========================================================
+       MOBILE NAVIGATION
+  ========================================================== -->
 
-    <!-- CONTACT -->
-    <div class="footer-contact">
+    <div class="mobile-nav" id="mobileNav">
+      <!-- HOME -->
+      <a href="#home"> HOME </a>
 
-      <a href="tel:+17205957723">
-        +1 (720) 595-7723
-      </a>
+      <!-- SHOP -->
+      <a href="#shop/all"> SHOP </a>
 
-      <a href="mailto:aseminew@zavarogmail.com">
-        aseminew@zavarogmail.com
-      </a>
+      <!-- COLLECTIONS -->
+      <a href="#collection/001"> COLLECTIONS </a>
 
+      <!-- WORLDS -->
+      <a href="#world/mens"> MENS </a>
+
+      <a href="#world/womens"> WOMENS </a>
+
+      <a href="#world/kids"> KIDS </a>
+
+      <!-- SHOP CATEGORIES -->
+      <div class="mobile-sub">
+        <a href="#shop/tops"> TOPS </a>
+
+        <a href="#shop/bottoms"> BOTTOMS </a>
+
+        <a href="#shop/hoodies"> HOODIES </a>
+
+        <a href="#shop/outerwear"> OUTERWEAR </a>
+      </div>
+
+      <!-- CLOSE -->
+      <button data-action="mobileClose">CLOSE ×</button>
     </div>
 
+    <!-- =========================================================
+       MAIN APPLICATION
+  ========================================================== -->
 
-    <!-- FOOTER BOTTOM -->
-    <div class="footer-bottom">
+    <main id="app"></main>
 
-      <span>
-        © 2026 ZAVARO
-      </span>
+    <!-- =========================================================
+       FOOTER
+  ========================================================== -->
 
-      <span>
-        THIS IS ZAVARO.
-      </span>
+    <footer class="footer">
+      <div class="footer-top">
+        <!-- BRAND -->
+        <div class="footer-brand">
+          <a href="#home" class="footer-logo"> ZAVARO </a>
 
-      <span>
-        EST. 2026
-      </span>
+          <p>
+            Built to rise.<br />
+            Wear confidence.
+          </p>
+        </div>
 
-    </div>
+        <!-- SHOP -->
+        <div>
+          <span> SHOP </span>
 
-  </footer>
+          <a href="#shop/all"> All pieces </a>
 
+          <a href="#collection/001"> Collection 001 </a>
 
-  <!-- =========================================================
+          <a href="#collection/new"> New arrivals </a>
+        </div>
+
+        <!-- WORLD -->
+        <div>
+          <span> WORLD </span>
+
+          <a href="#world/mens"> Mens </a>
+
+          <a href="#world/womens"> Womens </a>
+
+          <a href="#world/kids"> Kids </a>
+        </div>
+
+        <!-- CLIENT SERVICES -->
+        <div>
+          <span> CLIENT SERVICES </span>
+
+          <a href="mailto:aseminew@zavarogmail.com"> Contact </a>
+
+          <a href="#service/shipping"> Shipping </a>
+
+          <a href="#service/returns"> Returns </a>
+
+          <a href="#service/size"> Size guide </a>
+        </div>
+
+        <!-- SOCIAL -->
+        <div>
+          <span> FOLLOW </span>
+
+          <a href="#" onclick="return false;"> Instagram </a>
+
+          <a href="#" onclick="return false;"> TikTok </a>
+        </div>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="footer-contact">
+        <a href="tel:+17205957723"> +1 (720) 595-7723 </a>
+
+        <a href="mailto:aseminew@zavarogmail.com"> aseminew@zavarogmail.com </a>
+      </div>
+
+      <!-- FOOTER BOTTOM -->
+      <div class="footer-bottom">
+        <span> © 2026 ZAVARO </span>
+
+        <span> THIS IS ZAVARO. </span>
+
+        <span> EST. 2026 </span>
+      </div>
+    </footer>
+
+    <!-- =========================================================
        OVERLAY
   ========================================================== -->
 
-  <div
-    class="overlay"
-    id="overlay"
-  ></div>
+    <div class="overlay" id="overlay"></div>
 
-
-  <!-- =========================================================
+    <!-- =========================================================
        BAG DRAWER
   ========================================================== -->
 
-  <aside
-    class="bag-drawer"
-    id="bagDrawer"
-  >
+    <aside class="bag-drawer" id="bagDrawer">
+      <div class="drawer-head">
+        <span> YOUR BAG </span>
 
-    <div class="drawer-head">
-
-      <span>
-        YOUR BAG
-      </span>
-
-      <button data-action="closeBag">
-        ×
-      </button>
-
-    </div>
-
-
-    <div class="bag-body">
-      <div id="bagItems"></div>
-
-      <div
-        class="drawer-empty"
-        id="bagEmpty"
-      >
-        Your bag is waiting.
-
-        <small>
-          Choose something worth keeping.
-        </small>
-      </div>
-    </div>
-
-
-    <div class="drawer-bottom">
-
-      <div class="subtotal">
-
-        <span>
-          SUBTOTAL
-        </span>
-
-        <strong id="bagSubtotal">
-          $0.00
-        </strong>
-
+        <button data-action="closeBag">×</button>
       </div>
 
-      <button
-        class="dark-button full"
-        data-action="checkout"
-      >
-        CHECKOUT
-        <span>↗</span>
-      </button>
+      <div class="bag-body">
+        <div id="bagItems"></div>
 
-    </div>
+        <div class="drawer-empty" id="bagEmpty">
+          Your bag is waiting.
 
-  </aside>
+          <small> Choose something worth keeping. </small>
+        </div>
+      </div>
 
+      <div class="drawer-bottom">
+        <div class="subtotal">
+          <span> SUBTOTAL </span>
 
-  <!-- =========================================================
+          <strong id="bagSubtotal"> $0.00 </strong>
+        </div>
+
+        <button class="dark-button full" data-action="checkout">
+          CHECKOUT
+          <span>↗</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- =========================================================
        FAVORITES PANEL
   ========================================================== -->
 
-  <aside
-    class="favorites-panel"
-    id="favoritesPanel"
-    aria-label="Favorites"
-    aria-hidden="true"
-  >
+    <aside
+      class="favorites-panel"
+      id="favoritesPanel"
+      aria-label="Favorites"
+      aria-hidden="true"
+    >
+      <div class="drawer-head">
+        <span> YOUR FAVORITES </span>
 
-    <div class="drawer-head">
+        <button data-action="closeFavorites" aria-label="Close favorites">
+          ×
+        </button>
+      </div>
 
-      <span>
-        YOUR FAVORITES
-      </span>
+      <div class="favorites-body">
+        <p class="favorites-empty" id="favoritesEmpty">No favorites yet</p>
 
-      <button data-action="closeFavorites" aria-label="Close favorites">
-        ×
-      </button>
+        <div class="product-grid favorite-grid" id="favoritesGrid"></div>
+      </div>
+    </aside>
 
-    </div>
-
-    <div class="favorites-body">
-
-      <p class="favorites-empty" id="favoritesEmpty">
-        No favorites yet
-      </p>
-
-      <div class="product-grid favorite-grid" id="favoritesGrid"></div>
-
-    </div>
-
-  </aside>
-
-
-  <!-- =========================================================
+    <!-- =========================================================
        SEARCH PANEL
   ========================================================== -->
 
-  <section
-    class="search-panel"
-    id="searchPanel"
-  >
+    <section class="search-panel" id="searchPanel">
+      <div class="search-head">
+        <span> SEARCH ZAVARO </span>
 
-    <div class="search-head">
+        <button data-action="closeSearch">×</button>
+      </div>
 
-      <span>
-        SEARCH ZAVARO
-      </span>
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Search pieces, categories, colors..."
+        autocomplete="off"
+      />
 
-      <button data-action="closeSearch">
-        ×
-      </button>
+      <div class="search-results" id="searchResults"></div>
+    </section>
 
-    </div>
-
-
-    <input
-      id="searchInput"
-      type="search"
-      placeholder="Search pieces, categories, colors..."
-      autocomplete="off"
-    >
-
-
-    <div
-      class="search-results"
-      id="searchResults"
-    ></div>
-
-  </section>
-
-
-  <!-- =========================================================
+    <!-- =========================================================
        PRODUCT MODAL
   ========================================================== -->
 
-  <section
-    class="modal"
-    id="productModal"
-    aria-hidden="true"
-  >
+    <section class="modal" id="productModal" aria-hidden="true">
+      <div class="modal-card product-modal-card">
+        <button class="modal-close" data-action="closeProduct">×</button>
 
-    <div class="modal-card product-modal-card">
-
-      <button
-        class="modal-close"
-        data-action="closeProduct"
-      >
-        ×
-      </button>
-
-
-      <div class="product-modal-grid">
-
-
-        <div class="modal-image">
-
-          <img
-            id="modalImage"
-            src=""
-            alt=""
-          >
-
-        </div>
-
-
-        <div class="modal-info">
-
-          <span
-            class="eyebrow"
-            id="modalBadge"
-          ></span>
-
-
-          <h2 id="modalName"></h2>
-
-
-          <div
-            class="modal-price"
-            id="modalPrice"
-          ></div>
-
-
-          <p id="modalColor"></p>
-
-
-          <p
-            class="modal-desc"
-            id="modalDesc"
-          ></p>
-
-
-          <div class="size-label">
-            SIZE
+        <div class="product-modal-grid">
+          <div class="modal-image">
+            <img id="modalImage" src="" alt="" />
           </div>
 
+          <div class="modal-info">
+            <span class="eyebrow" id="modalBadge"></span>
 
-          <div
-            class="sizes"
-            id="modalSizes"
-          ></div>
+            <h2 id="modalName"></h2>
 
+            <div class="modal-price" id="modalPrice"></div>
 
-          <button
-            class="dark-button full"
-            data-action="modalAdd"
-          >
-            ADD TO BAG
-            <span>↗</span>
-          </button>
+            <p id="modalColor"></p>
 
+            <p class="modal-desc" id="modalDesc"></p>
 
-          <button
-            class="text-link"
-            data-action="modalWishlist"
-          >
-            ♡ ADD TO WISHLIST
-          </button>
+            <div class="size-label">SIZE</div>
 
+            <div class="sizes" id="modalSizes"></div>
 
-          <div class="accordions">
+            <button class="dark-button full" data-action="modalAdd">
+              ADD TO BAG
+              <span>↗</span>
+            </button>
 
-            <details open>
+            <button class="text-link" data-action="modalWishlist">
+              ♡ ADD TO WISHLIST
+            </button>
 
-              <summary>
-                DETAILS
-              </summary>
+            <div class="accordions">
+              <details open>
+                <summary>DETAILS</summary>
 
-              <p>
-                Designed as part of Collection 001 with a considered silhouette and understated ZAVARO identity.
-              </p>
+                <p>
+                  Designed as part of Collection 001 with a considered
+                  silhouette and understated ZAVARO identity.
+                </p>
+              </details>
 
-            </details>
+              <details>
+                <summary>FABRIC / FIT</summary>
 
+                <p>
+                  Premium-weight construction with a relaxed contemporary fit.
+                </p>
+              </details>
 
-            <details>
+              <details>
+                <summary>SHIPPING</summary>
 
-              <summary>
-                FABRIC / FIT
-              </summary>
-
-              <p>
-                Premium-weight construction with a relaxed contemporary fit.
-              </p>
-
-            </details>
-
-
-            <details>
-
-              <summary>
-                SHIPPING
-              </summary>
-
-              <p>
-                Delivery and payment details are confirmed after your order is received.
-              </p>
-
-            </details>
-
+                <p>
+                  Delivery and payment details are confirmed after your order is
+                  received.
+                </p>
+              </details>
+            </div>
           </div>
-
         </div>
-
       </div>
+    </section>
 
-    </div>
-
-  </section>
-
-
-  <!-- =========================================================
+    <!-- =========================================================
        CHECKOUT MODAL
   ========================================================== -->
 
-  <section
-    class="modal"
-    id="checkoutModal"
-    aria-hidden="true"
-  >
+    <section class="modal" id="checkoutModal" aria-hidden="true">
+      <div class="modal-card checkout-card">
+        <button class="modal-close" data-action="closeCheckout">×</button>
 
-    <div class="modal-card checkout-card">
+        <div class="checkout-copy">
+          <span class="eyebrow"> CHECKOUT </span>
 
-      <button
-        class="modal-close"
-        data-action="closeCheckout"
-      >
-        ×
-      </button>
+          <h2>
+            Complete<br />
+            <em>your order.</em>
+          </h2>
 
-
-      <div class="checkout-copy">
-
-        <span class="eyebrow">
-          CHECKOUT
-        </span>
-
-        <h2>
-          Complete<br>
-          <em>your order.</em>
-        </h2>
-
-        <p>
-          Cash on Delivery. We will contact you with payment and delivery details.
-        </p>
-
-      </div>
-
-
-      <form id="checkoutForm">
-
-        <label>
-          FULL NAME *
-
-          <input
-            id="customerName"
-            required
-            autocomplete="name"
-            placeholder="Your full name"
-          >
-
-        </label>
-
-
-        <label>
-          PHONE NUMBER *
-
-          <input
-            id="customerPhone"
-            required
-            type="tel"
-            autocomplete="tel"
-            placeholder="+251 ..."
-          >
-
-        </label>
-
-
-        <label>
-          EMAIL
-          <span>(optional)</span>
-
-          <input
-            id="customerEmail"
-            type="email"
-            autocomplete="email"
-            placeholder="you@example.com"
-          >
-
-        </label>
-
-
-        <div class="payment-line">
-
-          <span>
-            CASH ON DELIVERY
-          </span>
-
-          <small>
-            Payment and delivery are confirmed by phone.
-          </small>
-
+          <p>
+            Cash on Delivery. We will contact you with payment and delivery
+            details.
+          </p>
         </div>
 
+        <form id="checkoutForm">
+          <label>
+            FULL NAME *
 
-        <button
-          class="dark-button full"
-          type="submit"
-        >
-          PLACE ORDER
-          <span>↗</span>
-        </button>
+            <input
+              id="customerName"
+              required
+              autocomplete="name"
+              placeholder="Your full name"
+            />
+          </label>
 
-      </form>
+          <label>
+            PHONE NUMBER *
 
-    </div>
+            <input
+              id="customerPhone"
+              required
+              type="tel"
+              autocomplete="tel"
+              placeholder="+251 ..."
+            />
+          </label>
 
-  </section>
+          <label>
+            EMAIL
+            <span>(optional)</span>
 
+            <input
+              id="customerEmail"
+              type="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+            />
+          </label>
 
-  <!-- =========================================================
+          <div class="payment-line">
+            <span> CASH ON DELIVERY </span>
+
+            <small> Payment and delivery are confirmed by phone. </small>
+          </div>
+
+          <button class="dark-button full" type="submit">
+            PLACE ORDER
+            <span>↗</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- =========================================================
        SUCCESS MODAL
   ========================================================== -->
 
-  <section
-    class="modal"
-    id="successModal"
-    aria-hidden="true"
-  >
+    <section class="modal" id="successModal" aria-hidden="true">
+      <div class="modal-card success-card">
+        <span class="success-mark"> ✓ </span>
 
-    <div class="modal-card success-card">
+        <span class="eyebrow"> ORDER RECEIVED </span>
 
-      <span class="success-mark">
-        ✓
-      </span>
+        <h2>
+          Your order<br />
+          <em>is in.</em>
+        </h2>
 
-      <span class="eyebrow">
-        ORDER RECEIVED
-      </span>
+        <p id="successText">We've received your order successfully.</p>
 
-      <h2>
-        Your order<br>
-        <em>is in.</em>
-      </h2>
+        <button class="dark-button" data-action="closeSuccess">
+          CONTINUE SHOPPING
+        </button>
+      </div>
+    </section>
 
-      <p id="successText">
-        We've received your order successfully.
-      </p>
-
-      <button
-        class="dark-button"
-        data-action="closeSuccess"
-      >
-        CONTINUE SHOPPING
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- =========================================================
+    <!-- =========================================================
        TOAST
   ========================================================== -->
 
-  <div
-    class="toast"
-    id="toast"
-  ></div>
+    <div class="toast" id="toast"></div>
 
-
-  <!-- =========================================================
+    <!-- =========================================================
        JAVASCRIPT
   ========================================================== -->
 
-  <script src="script.js"></script>
-
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
